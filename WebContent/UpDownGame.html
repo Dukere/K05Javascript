@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UpDownGame</title>
+    <script>
+        var randNum =parseInt(Math.random()*100)+1;
+        console.log("생성된 수 : " + randNum);
+        var tryCheck=0;
+        var correct=false;
+
+        function restart(){
+            alert("재시작하겠습니다.");
+            location.reload();
+        }
+
+        function checkNum(){
+            var text_var = document.getElementById("choice");
+            var show = document.getElementById("trys");
+            var img_tag = document.getElementById("img");
+            var num = text_var.value;
+            if(correct==true){
+                alert("이미 정답을 맞추셨습니다. 재시작 버튼을 눌러주세요.");
+                return;
+            }
+            if(num == ''){
+                alert("내용을 입력하세요.");
+                return;
+            }
+            num = eval(num);
+            if(num<1||num>100){
+                alert("범위가 잘못됐습니다. (1~100)");
+                img_tag.src="./images/error.jpg";
+                return;
+            }
+            tryCheck++;
+            show.innerHTML=tryCheck;
+            if(tryCheck==7){
+                if(num==randNum){
+                    img_tag.src="./images/answer.jpeg";
+                    alert("정답!");
+                    console.log("정답!");
+                    correct=true;
+                } else{
+                    alert("7번 기회를 다 쓰셨습니다. 재시작하겠습니다.")
+                    console.log("실패!");
+                    location.reload();
+                }
+            }
+            if(num<randNum){
+                console.log("UP");
+                img_tag.src="./images/up.jpg";
+            }else if(num>randNum){
+                console.log("DOWN");
+                img_tag.src="./images/down.jpg";
+            } else{
+                img_tag.src="./images/answer.jpeg";
+                alert("정답!");
+                console.log("정답!");
+                correct=true;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>업다운게임</h2>
+    <h3>1~100사이의 숫자를 입력하세요.</h3>
+    시도횟수 : <span id="trys" style="font-size: 40px;">0</span>회
+    <br>
+    <br>
+    숫자입력 :
+    <input type="number" id="choice" value="" min="1" max="100">
+    <input type="button" id ="check" value="확인" onclick="checkNum()">
+    <input type="button" id ="restart" value="재시작" onclick="restart()">
+    <br>
+    <img id ="img" src="./images/updowngame.jpg" width="400"/>
+
+
+</body>
+</html>
