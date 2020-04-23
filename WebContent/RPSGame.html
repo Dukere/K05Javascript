@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0420homework</title>
+    <script>
+        function RSC(imgName){
+            var img_tag = document.getElementById("myPick");
+            var com_tag = document.getElementById("comPick");
+            switch(imgName){
+                case 0:
+                    img_tag.src = "./images/scissors.jpg";
+                    break;
+                case 1:
+                    img_tag.src = "./images/rock.jpg";
+                    break;
+                case 2:
+                    img_tag.src = "./images/paper.jpg";
+                    break;
+            }
+            var comPick = parseInt(Math.random()*3);
+            switch(comPick){
+                case 0:
+                    com_tag.src = "./images/scissors.jpg";
+                    break;
+                case 1:
+                    com_tag.src = "./images/rock.jpg";
+                    break;
+                case 2:
+                    com_tag.src = "./images/paper.jpg";
+                    break;
+            }
+            var res_tag = document.getElementById("result");
+            switch(imgName-comPick){
+                case -2: case 1:
+                    res_tag.innerHTML="이겼습니다.";
+                    alert("이겼습니다.");
+                    console.log("이겼습니다.");
+                    break;
+                case -1: case 2:
+                    res_tag.innerHTML ="졌습니다.";
+                    alert("졌습니다.");
+                    console.log("졌습니다.");
+                    break;
+                case 0:
+                    res_tag.innerHTML ="비겼습니다.";
+                    alert("비겼습니다.");
+                    console.log("비겼습니다.");
+                    break;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>가위바위보게임</h2>
+    <table border="1" padding='1'>
+        <tr>
+            <td>컴퓨터</td>
+            <td>나</td>
+        </tr>
+        <tr>
+            <td><img id ="comPick" src="./images/start.png" width="400"/></td>
+            <td><img id ="myPick" src="./images/start.png" width="400"/></td>
+        </tr>
+        <tr>
+            <td colspan="2"><span id="result" style="color: red; font-size: 40px;">승부결과</span></td>
+        </tr>
+    </table>
+
+    
+    <input type="button" value="가위" onclick="RSC(0)">
+    <input type="button" value="바위" onclick="RSC(1)">
+    <input type="button" value="보" onclick="RSC(2)">
+</body>
+</html>

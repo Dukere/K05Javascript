@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculator</title>
+    <style>
+        *{
+            text-align: center;
+            border:0px solid;
+            border-radius: 10px;
+            font-size: 21px;
+            font-weight: bold;
+        }
+        table{
+            border-spacing: 6px;
+            background-color: #DDDDDD;
+        }
+        #first{
+            padding-right: 15px;
+            background-color: #70C738;
+            width: 300px;
+            height: 80px;
+            text-align: right;
+            font-size: 40px;
+            color : #373737;
+        }
+        .second{
+            color: white;
+            background-color: #7B7B7B;
+            width: 50%;
+            height: 45px;
+        }
+        .num{
+            
+            background-color: #373737;
+            color: white;
+            width: 25%;
+            height: 45px;
+        }
+        .cal{
+            color: white;
+            background-color: #FA960A;
+            width: 25%;
+        }
+    </style>
+    <script>        
+        //기호입력 시 화면에는 전에 입력한 숫자가 남아있게 관리
+        var clock = false;
+        var index =false;
+        //숫자입력
+        function numOnScreen(num){
+            var scnVar = document.getElementById("first");
+             
+            if(clock==true){
+                clock=false;
+                scnVar.innerHTML=num;
+                return;
+            }
+            //스크린에 0이 있을 때 
+            if(scnVar.innerHTML=="0"){
+                //점 입력할 때
+                if(num=="."){
+                    if(scnVar.innerHTML.contains('.')){
+                        return;
+                    }
+                    scnVar.innerHTML=scnVar.innerHTML+num;
+                    return;
+                }
+                scnVar.innerHTML=num;
+                return;
+            }
+            if(scnVar.innerHTML.length>=14){
+                return;
+            }
+            scnVar.innerHTML=scnVar.innerHTML+num;  
+        }
+        
+        //계산식 입력
+        function calculation(obj){
+            var scnVar = document.getElementById("first");
+            var hidVar = document.hidForm;
+
+            if(clock==true){
+
+            }
+
+            switch(obj){
+                case "plus":
+                    if(clock==true){
+                        hidVar.hidden2.value = "+";
+                        return;
+                    }
+                    if(index==true){
+                        scnVar.innerHTML = parseFloat(eval(hidVar.hidden.value+hidVar.hidden2.value+scnVar.innerHTML));
+                    }
+                    hidVar.hidden.value = scnVar.innerHTML;
+                    hidVar.hidden2.value = "+";
+                    clock=true;
+                    index=true;
+                    break;
+                case "min":
+                    if(clock==true){
+                        hidVar.hidden2.value = "-";
+                        return;
+                    }
+                    if(index==true){
+                        scnVar.innerHTML = parseFloat(eval(hidVar.hidden.value+hidVar.hidden2.value+scnVar.innerHTML));
+                    }
+                    hidVar.hidden.value = scnVar.innerHTML;
+                    hidVar.hidden2.value = "-";
+                    clock=true;
+                    index=true;
+                    break;
+                case "mul":
+                    if(clock==true){
+                        hidVar.hidden2.value = "*";
+                        return;
+                    }
+                    if(index==true){
+                        scnVar.innerHTML = parseFloat(eval(hidVar.hidden.value+hidVar.hidden2.value+scnVar.innerHTML));
+                    }
+                    hidVar.hidden.value = scnVar.innerHTML;
+                    hidVar.hidden2.value = "*";
+                    clock=true;
+                    index=true;
+                    break;
+                case "div":
+                    if(clock==true){
+                        hidVar.hidden2.value = "/";
+                        return;
+                    }
+                    if(index==true){
+                        scnVar.innerHTML = parseFloat(eval(hidVar.hidden.value+hidVar.hidden2.value+scnVar.innerHTML));
+                    }
+                    hidVar.hidden.value = scnVar.innerHTML;
+                    hidVar.hidden2.value = "/";
+                    clock=true;
+                    index=true;
+                    break;
+                case "clear":
+                    scnVar.innerHTML="0";
+                    hidVar.hidden.value=null;
+                    clock=false;
+                    index=false;
+                    return;
+                case "back":
+                    if(scnVar.innerHTML.length<=1||clock==true){
+                        scnVar.innerHTML="0";
+                        return;
+                    }
+                    scnVar.innerHTML=scnVar.innerHTML.slice(0,-1);
+                    return;
+                case "cal":
+                    scnVar.innerHTML = parseFloat(eval(hidVar.hidden.value+hidVar.hidden2.value+scnVar.innerHTML));
+                    hidVar.hidden.value = scnVar.innerHTML;
+                    clock=true;
+                    index=false;
+                    break;
+            }
+        }
+    </script>
+</head>
+<body>
+    <form name="hidForm" method="post" >
+        <input type="hidden" name = "hidden" value="0">
+        <input type="hidden" name = "hidden2" value=null>
+    </form>
+        <table cellspacing="2" cellpadding="2"
+        width="410px" height="360px">
+            <tr>
+                <td id = "first" colspan="4">0</td>
+            </tr>
+            <tr>
+                <td class = "second" colspan="2" onclick="calculation('back')" >BackSpace</td>
+                <td class = "second" colspan="2" onclick="calculation('clear')">C</td>
+            </tr>
+            <tr>
+                <td class="num" onclick="numOnScreen('1')">1</td>
+                <td class="num" onclick="numOnScreen('2')">2</td>
+                <td class="num" onclick="numOnScreen('3')">3</td>
+                <td class="cal" onclick = "calculation('div')">/</td>
+            </tr>
+            <tr>
+                <td class="num" onclick="numOnScreen('4')">4</td>
+                <td class="num" onclick="numOnScreen('5')">5</td>
+                <td class="num" onclick="numOnScreen('6')">6</td>
+                <td class="cal" onclick = "calculation('mul')">x</td>
+            </tr>
+            <tr>
+                <td class="num" onclick="numOnScreen('7')">7</td>
+                <td class="num" onclick="numOnScreen('8')">8</td>
+                <td class="num" onclick="numOnScreen('9')">9</td>
+                <td class="cal" onclick = "calculation('plus')">+</td>
+            </tr>
+            <tr>
+                <td class="num" onclick = "calculation('cal')">=</td>
+                <td class="num" onclick="numOnScreen('0')">0</td>
+                <td class="num" onclick="numOnScreen('.')">.</td>
+                <td class="cal" onclick = "calculation('min')">-</td>
+            </tr>
+        </table>
+</body>
+</html>
